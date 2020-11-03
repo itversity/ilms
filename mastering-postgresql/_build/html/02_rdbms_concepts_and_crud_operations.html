@@ -1,0 +1,2579 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RDBMS Concepts and CRUD Operations &#8212; My Jupyter Book</title>
+    
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="content.html">
+   Mastering Postgresql
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_getting_started.html">
+   Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_writing_basic_sql_queries.html">
+   Writing Basic SQL Queries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_creating_tables_and_indexes.html">
+   Creating Tables and Indexes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_partitioning_tables_and_indexes.html">
+   Partitioning Tables and Indexes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_predefined_functions.html">
+   Pre-Defined Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_writing_advanced_sql_queries.html">
+   Writing Advanced SQL Queries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_basic_performance_tuning_principles.html">
+   Basic Performance Tuning Principles
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/02_rdbms_concepts_and_crud_operations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/02_rdbms_concepts_and_crud_operations.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#normalization-principles">
+   Normalization Principles
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tables-as-relations">
+   Tables as Relations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#database-operations-overview">
+   Database Operations - Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#crud-operations">
+   CRUD Operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-table">
+   Creating Table
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inserting-data">
+   Inserting Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#updating-data">
+   Updating Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deleting-data">
+   Deleting Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-transactions">
+   Overview of Transactions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise-crud-operations">
+   Exercise - CRUD Operations
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="rdbms-concepts-and-crud-operations">
+<h1>RDBMS Concepts and CRUD Operations<a class="headerlink" href="#rdbms-concepts-and-crud-operations" title="Permalink to this headline">¶</a></h1>
+<p>Let us understand how to perform CRUD operations using Postgresql.</p>
+<ul class="simple">
+<li><p>Normalization Principles</p></li>
+<li><p>Tables as Relations</p></li>
+<li><p>Database Operations - Overview</p></li>
+<li><p>CRUD Operations</p></li>
+<li><p>Creating Table</p></li>
+<li><p>Inserting Data</p></li>
+<li><p>Updating and Deleting Data</p></li>
+<li><p>Overview of Transactions</p></li>
+<li><p>Exercise - CRUD Operations</p></li>
+</ul>
+<div class="section" id="normalization-principles">
+<h2>Normalization Principles<a class="headerlink" href="#normalization-principles" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="tables-as-relations">
+<h2>Tables as Relations<a class="headerlink" href="#tables-as-relations" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="database-operations-overview">
+<h2>Database Operations - Overview<a class="headerlink" href="#database-operations-overview" title="Permalink to this headline">¶</a></h2>
+<p>Let us get an overview of Database Operation we typically perform on regular basis. They are broadly categorized into the following:</p>
+<ul class="simple">
+<li><p>DDL - Data Definition Language</p>
+<ul>
+<li><p>CREATE/ALTER/DROP Tables</p></li>
+<li><p>CREATE/ALTER/DROP Indexes</p></li>
+<li><p>Add constraints to tables</p></li>
+<li><p>CREATE/ALTER/DROP Views</p></li>
+<li><p>CREATE/ALTER/DROP Sequences</p></li>
+</ul>
+</li>
+<li><p>DML - Data Manipulation Language</p>
+<ul>
+<li><p>Inserting new data into the table</p></li>
+<li><p>Updating existing data in the table</p></li>
+<li><p>Deleting existing data from the table</p></li>
+</ul>
+</li>
+<li><p>DQL - Data Query Language</p>
+<ul>
+<li><p>Read the data from the table</p></li>
+</ul>
+</li>
+</ul>
+<p>On top of these we also use TCL (Transaction Control Language). As part of this section we will primarily focus on CRUD Operations which includes DML and basic DDL.</p>
+</div>
+<div class="section" id="crud-operations">
+<h2>CRUD Operations<a class="headerlink" href="#crud-operations" title="Permalink to this headline">¶</a></h2>
+<p>Let us get an overview of CRUD Operations. They are nothing but DML and queries to read the data while performing database operations.</p>
+<ul class="simple">
+<li><p>CRUD is widely used from application development perspective.</p></li>
+<li><p>C - CREATE (INSERT)</p></li>
+<li><p>R - READ (READ)</p></li>
+<li><p>U - UPDATE (UPDATE)</p></li>
+<li><p>D - DELETE (DELETE)</p></li>
+</ul>
+<p>As part of the application development process we perform CRUD Operations using REST APIs.</p>
+</div>
+<div class="section" id="creating-table">
+<h2>Creating Table<a class="headerlink" href="#creating-table" title="Permalink to this headline">¶</a></h2>
+<p>Before getting into action with respect to basic DML and queries or CRUD operations, we need to prepare tables.</p>
+<p>At this time we have not covered DDL (to create objects such as table) yet. For now just create the table by copy pasting and we will get into concepts as part of the subsequent sections.</p>
+<ul class="simple">
+<li><p>Connect to the database.</p></li>
+<li><p>Create the table.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://training:itversity!23@localhost:5432/training_sms
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>env: DATABASE_URL=postgresql://training:itversity!23@localhost:5432/training_sms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM information_schema.tables LIMIT 10
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>table_catalog</th>
+        <th>table_schema</th>
+        <th>table_name</th>
+        <th>table_type</th>
+        <th>self_referencing_column_name</th>
+        <th>reference_generation</th>
+        <th>user_defined_type_catalog</th>
+        <th>user_defined_type_schema</th>
+        <th>user_defined_type_name</th>
+        <th>is_insertable_into</th>
+        <th>is_typed</th>
+        <th>commit_action</th>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>public</td>
+        <td>t</td>
+        <td>BASE TABLE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>YES</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>public</td>
+        <td>users</td>
+        <td>BASE TABLE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>YES</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_type</td>
+        <td>BASE TABLE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>YES</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_foreign_server</td>
+        <td>BASE TABLE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>YES</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_roles</td>
+        <td>VIEW</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>NO</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_settings</td>
+        <td>VIEW</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>NO</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_cursors</td>
+        <td>VIEW</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>NO</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_stat_bgwriter</td>
+        <td>VIEW</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>NO</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_subscription</td>
+        <td>BASE TABLE</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>YES</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td>training_sms</td>
+        <td>pg_catalog</td>
+        <td>pg_stat_progress_vacuum</td>
+        <td>VIEW</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>None</td>
+        <td>NO</td>
+        <td>NO</td>
+        <td>None</td>
+    </tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+CREATE TABLE users (
+  user_id SERIAL PRIMARY KEY,
+  user_first_name VARCHAR(30) NOT NULL,
+  user_last_name VARCHAR(30) NOT NULL,
+  user_email_id VARCHAR(50) NOT NULL,
+  user_email_validated BOOLEAN DEFAULT FALSE,
+  user_password VARCHAR(200),
+  user_role VARCHAR(1) NOT NULL DEFAULT &#39;U&#39;, --U and A
+  is_active BOOLEAN DEFAULT FALSE,
+  create_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_updated_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+(psycopg2.errors.DuplicateTable) relation &quot;users&quot; already exists
+
+[SQL: CREATE TABLE users (
+  user_id SERIAL PRIMARY KEY,
+  user_first_name VARCHAR(30) NOT NULL,
+  user_last_name VARCHAR(30) NOT NULL,
+  user_email_id VARCHAR(50) NOT NULL,
+  user_email_validated BOOLEAN DEFAULT FALSE,
+  user_password VARCHAR(200),
+  user_role VARCHAR(1) NOT NULL DEFAULT &#39;U&#39;, --U and A
+  is_active BOOLEAN DEFAULT FALSE,
+  create_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_updated_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);]
+(Background on this error at: http://sqlalche.me/e/13/f405)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Let us connect to psql and check the output of <code class="docutils literal notranslate"><span class="pre">\d</span></code>. You will see <strong>users table</strong> as well as <strong>sequence for user_id</strong> created.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+15 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+</table></div></div>
+</div>
+</div>
+<div class="section" id="inserting-data">
+<h2>Inserting Data<a class="headerlink" href="#inserting-data" title="Permalink to this headline">¶</a></h2>
+<p>Let us see how to insert the data into the table.</p>
+<ul class="simple">
+<li><p>We need to use INSERT clause to insert the data. Here is the sample syntax.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INSERT</span> <span class="n">INTO</span> <span class="o">&lt;</span><span class="n">table_name</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col3</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="n">val1</span><span class="p">,</span> <span class="n">val2</span><span class="p">,</span> <span class="n">val3</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>If we don’t pass columns after table name then we need to specify values for all the columns. It is not good practice to insert records with out specifying column names.</p></li>
+<li><p>If we do not specify value for <code class="docutils literal notranslate"><span class="pre">SERIAL</span></code> field, a sequence generated number will be used.</p></li>
+<li><p>It is not mandatory to pass the values for those fields where <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> is specified. Values specified in <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> clause will be used.</p></li>
+<li><p>It is mandatory to specify columns and corresponding values for all columns where <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code> is specified.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+INSERT INTO users (user_first_name, user_last_name, user_email_id)
+VALUES (&#39;Scott&#39;, &#39;Tiger&#39;, &#39;scott@tiger.com&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
+Returning data to local variable result_set
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+INSERT INTO users (user_first_name, user_last_name, user_email_id)
+VALUES (&#39;Donald&#39;, &#39;Duck&#39;, &#39;donald@duck.com&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+1 rows affected.
+Returning data to local variable result_set
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+17 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Scott</td>
+        <td>Tiger</td>
+        <td>scott@tiger.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.690790</td>
+        <td>2020-11-03 06:38:10.690790</td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Donald</td>
+        <td>Duck</td>
+        <td>donald@duck.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.860135</td>
+        <td>2020-11-03 06:38:10.860135</td>
+    </tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+INSERT INTO users (user_first_name, user_last_name, user_email_id, user_role, is_active)
+VALUES (&#39;Mickey&#39;, &#39;Mouse&#39;, &#39;mickey@mouse.com&#39;, &#39;U&#39;, true)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
+Returning data to local variable result_set
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+18 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Scott</td>
+        <td>Tiger</td>
+        <td>scott@tiger.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.690790</td>
+        <td>2020-11-03 06:38:10.690790</td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Donald</td>
+        <td>Duck</td>
+        <td>donald@duck.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.860135</td>
+        <td>2020-11-03 06:38:10.860135</td>
+    </tr>
+    <tr>
+        <td>33</td>
+        <td>Mickey</td>
+        <td>Mouse</td>
+        <td>mickey@mouse.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.891852</td>
+        <td>2020-11-03 06:38:10.891852</td>
+    </tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+INSERT INTO users 
+    (user_first_name, user_last_name, user_email_id, user_password, user_role, is_active) 
+VALUES 
+    (&#39;Gordan&#39;, &#39;Bradock&#39;, &#39;gbradock0@barnesandnoble.com&#39;, &#39;h9LAz7p7ub&#39;, &#39;U&#39;, true),
+    (&#39;Tobe&#39;, &#39;Lyness&#39;, &#39;tlyness1@paginegialle.it&#39;, &#39;oEofndp&#39;, &#39;U&#39;, true),
+    (&#39;Addie&#39;, &#39;Mesias&#39;, &#39;amesias2@twitpic.com&#39;, &#39;ih7Y69u56&#39;, &#39;U&#39;, true)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+3 rows affected.
+Returning data to local variable result_set
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+21 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Scott</td>
+        <td>Tiger</td>
+        <td>scott@tiger.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.690790</td>
+        <td>2020-11-03 06:38:10.690790</td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Donald</td>
+        <td>Duck</td>
+        <td>donald@duck.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.860135</td>
+        <td>2020-11-03 06:38:10.860135</td>
+    </tr>
+    <tr>
+        <td>33</td>
+        <td>Mickey</td>
+        <td>Mouse</td>
+        <td>mickey@mouse.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.891852</td>
+        <td>2020-11-03 06:38:10.891852</td>
+    </tr>
+    <tr>
+        <td>34</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>False</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>35</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>False</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>36</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>False</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+</table></div></div>
+</div>
+</div>
+<div class="section" id="updating-data">
+<h2>Updating Data<a class="headerlink" href="#updating-data" title="Permalink to this headline">¶</a></h2>
+<p>Let us see how we can update data in the table.</p>
+<ul class="simple">
+<li><p>Typical syntax</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UPDATE</span> <span class="o">&lt;</span><span class="n">table_name</span><span class="o">&gt;</span>
+<span class="n">SET</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="n">val1</span><span class="p">,</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="n">val2</span>
+<span class="n">WHERE</span> <span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> condition is specified all rows in the table will be updated.</p></li>
+<li><p>For now we will see basic examples for update. One need to have good knowledge about <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause to take care of complex conditions.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Set user role for user_id 1 as ‘A’</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> UPDATE users SET user_role = &#39;A&#39; WHERE user_id = 1
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+0 rows affected.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+21 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Scott</td>
+        <td>Tiger</td>
+        <td>scott@tiger.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.690790</td>
+        <td>2020-11-03 06:38:10.690790</td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Donald</td>
+        <td>Duck</td>
+        <td>donald@duck.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>False</td>
+        <td>2020-11-03 06:38:10.860135</td>
+        <td>2020-11-03 06:38:10.860135</td>
+    </tr>
+    <tr>
+        <td>33</td>
+        <td>Mickey</td>
+        <td>Mouse</td>
+        <td>mickey@mouse.com</td>
+        <td>False</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.891852</td>
+        <td>2020-11-03 06:38:10.891852</td>
+    </tr>
+    <tr>
+        <td>34</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>False</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>35</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>False</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>36</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>False</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+</table></div></div>
+</div>
+<ul class="simple">
+<li><p>Set user_email_validated as well as is_active to true for all users</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+
+UPDATE users
+SET
+    user_email_validated = true,
+    is_active = true
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+21 rows affected.
+Returning data to local variable result_set
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+21 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Scott</td>
+        <td>Tiger</td>
+        <td>scott@tiger.com</td>
+        <td>True</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.690790</td>
+        <td>2020-11-03 06:38:10.690790</td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Donald</td>
+        <td>Duck</td>
+        <td>donald@duck.com</td>
+        <td>True</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.860135</td>
+        <td>2020-11-03 06:38:10.860135</td>
+    </tr>
+    <tr>
+        <td>33</td>
+        <td>Mickey</td>
+        <td>Mouse</td>
+        <td>mickey@mouse.com</td>
+        <td>True</td>
+        <td>None</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.891852</td>
+        <td>2020-11-03 06:38:10.891852</td>
+    </tr>
+    <tr>
+        <td>34</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>35</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>36</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+</table></div></div>
+</div>
+</div>
+<div class="section" id="deleting-data">
+<h2>Deleting Data<a class="headerlink" href="#deleting-data" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to delete the data from a table.</p>
+<ul class="simple">
+<li><p>Typical Syntax - <code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">&lt;table&gt;</span> <span class="pre">WHERE</span> <span class="pre">&lt;condition&gt;</span></code>.</p></li>
+<li><p>If we do not specify condition, it will delete all the data from the table.</p></li>
+<li><p>It is not recommended to use delete with out where condition to delete all the data (instead we should use <code class="docutils literal notranslate"><span class="pre">TRUNCATE</span></code>).</p></li>
+<li><p>For now we will see basic examples for update. One need to have good knowledge about <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause to take care of complex conditions.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Delete all those records from users where the password is not set. We need to use <code class="docutils literal notranslate"><span class="pre">IS</span> <span class="pre">NULL</span></code> as condition to compare against Null values.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> DELETE FROM users WHERE user_password IS NULL
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+3 rows affected.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM users
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://training:***@localhost:5432/training_sms
+18 rows affected.
+</pre></div>
+</div>
+<div class="output text_html"><table>
+    <tr>
+        <th>user_id</th>
+        <th>user_first_name</th>
+        <th>user_last_name</th>
+        <th>user_email_id</th>
+        <th>user_email_validated</th>
+        <th>user_password</th>
+        <th>user_role</th>
+        <th>is_active</th>
+        <th>create_ts</th>
+        <th>last_updated_ts</th>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:07:14.432355</td>
+        <td>2020-11-02 23:07:14.432355</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-10-29 15:44:29.651380</td>
+        <td>2020-10-29 15:44:29.651380</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:02:06.904998</td>
+        <td>2020-11-02 23:02:06.904998</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:03:50.787887</td>
+        <td>2020-11-02 23:03:50.787887</td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-02 23:04:43.294625</td>
+        <td>2020-11-02 23:04:43.294625</td>
+    </tr>
+    <tr>
+        <td>34</td>
+        <td>Gordan</td>
+        <td>Bradock</td>
+        <td>gbradock0@barnesandnoble.com</td>
+        <td>True</td>
+        <td>h9LAz7p7ub</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>35</td>
+        <td>Tobe</td>
+        <td>Lyness</td>
+        <td>tlyness1@paginegialle.it</td>
+        <td>True</td>
+        <td>oEofndp</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+    <tr>
+        <td>36</td>
+        <td>Addie</td>
+        <td>Mesias</td>
+        <td>amesias2@twitpic.com</td>
+        <td>True</td>
+        <td>ih7Y69u56</td>
+        <td>U</td>
+        <td>True</td>
+        <td>2020-11-03 06:38:10.926927</td>
+        <td>2020-11-03 06:38:10.926927</td>
+    </tr>
+</table></div></div>
+</div>
+</div>
+<div class="section" id="overview-of-transactions">
+<h2>Overview of Transactions<a class="headerlink" href="#overview-of-transactions" title="Permalink to this headline">¶</a></h2>
+<p>Let us go through the details related to transactions.</p>
+<ul class="simple">
+<li><p>In Postgresql by default each DML operation is automatically committed.</p></li>
+<li><p>To ensure that group of operations are committed together, we need to first initiate a transaction.</p></li>
+</ul>
+</div>
+<div class="section" id="exercise-crud-operations">
+<h2>Exercise - CRUD Operations<a class="headerlink" href="#exercise-crud-operations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
