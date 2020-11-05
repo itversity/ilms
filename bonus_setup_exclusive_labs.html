@@ -123,11 +123,6 @@
    Writing Advanced SQL Queries
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_basic_performance_tuning_principles.html">
-   Basic Performance Tuning Principles
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -398,9 +393,13 @@ docker ps -a
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                  PORTS                    NAMES
-332189d9abcf        postgres            &quot;docker-entrypoint.s…&quot;   38 hours ago        Up 38 hours             0.0.0.0:5433-&gt;5432/tcp   sms_pg
-3874ed91f0d2        hello-world         &quot;/hello&quot;                 4 days ago          Exited (0) 4 days ago                            hw
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                    PORTS                    NAMES
+4d825eb0ebee        sms_web              &quot;sh -c &#39; ./db_script…&quot;   3 days ago          Exited (255) 2 days ago   0.0.0.0:5000-&gt;5000/tcp   sms_web_1
+f0422184a250        postgres:12          &quot;docker-entrypoint.s…&quot;   3 days ago          Exited (255) 2 days ago   0.0.0.0:5432-&gt;5432/tcp   sms_db_1
+7585117e9f44        labs-official_app    &quot;sh -c &#39;python manag…&quot;   8 days ago          Exited (0) 2 days ago                              labs-official_app_1
+c96c488ef840        a4a03014e415         &quot;sh -c &#39;python manag…&quot;   8 days ago          Exited (0) 8 days ago                              labs-official_app_run_656519563d13
+36e8e385562b        postgres:10-alpine   &quot;docker-entrypoint.s…&quot;   8 days ago          Exited (0) 8 days ago                              labs-official_db_1
+55313f9b26a0        8ba98444c9c7         &quot;/bin/sh -c &#39;pip ins…&quot;   2 weeks ago         Exited (2) 2 weeks ago                             angry_payne
 </pre></div>
 </div>
 </div>
@@ -415,8 +414,67 @@ docker images -a
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-postgres            latest              c96f8b6bc0d9        2 weeks ago         314MB
-hello-world         latest              bf756fb1ae65        10 months ago       13.3kB
+labs-official_app   latest              8060f615c875        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              a148384864f0        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              ab291b33df44        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              85984a037ca5        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              283efbe07fcc        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              81a58c3e2d26        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              0f323e952ae4        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              f1e72f4f6041        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              691a3448dec1        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              661fdea2cb8d        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              5782a3f6c7c7        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              a4a03014e415        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              13276be16588        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              6fb6c53a366e        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              9a8fd725a0ec        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              2e6339a165f8        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              e511965cd244        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              ceb8d38f2578        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              049f09b142b3        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              48c48dc832de        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              0d0469358ef2        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              0a1027f52e06        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              236e00eeec42        8 days ago          886MB
+&lt;none&gt;              &lt;none&gt;              851130cb9d81        8 days ago          886MB
+&lt;none&gt;              &lt;none&gt;              68f0b6107661        8 days ago          886MB
+postgres            10-alpine           72516014d1a3        13 days ago         71.9MB
+python              3                   5336a27a9b1f        2 weeks ago         886MB
+&lt;none&gt;              &lt;none&gt;              295fd57335da        2 weeks ago         1.05GB
+sms_web             latest              70fb78f1b546        2 weeks ago         1.05GB
+&lt;none&gt;              &lt;none&gt;              3dfce65454b4        2 weeks ago         1.05GB
+&lt;none&gt;              &lt;none&gt;              8ba98444c9c7        2 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              5ce2e1391351        2 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              baf7cfb5b88e        2 weeks ago         907MB
+&lt;none&gt;              &lt;none&gt;              49319f36d0e5        2 weeks ago         893MB
+&lt;none&gt;              &lt;none&gt;              8a8d793f33b0        2 weeks ago         876MB
+postgres            12                  492fb9ae4e7a        3 weeks ago         314MB
+&lt;none&gt;              &lt;none&gt;              575e02fddfcf        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              916278c902b3        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              3765a8d33066        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              feade4d30c9f        4 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              9adabc544196        4 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              2ebf9dd35811        4 weeks ago         907MB
+&lt;none&gt;              &lt;none&gt;              e0bb4083f1d5        4 weeks ago         893MB
+&lt;none&gt;              &lt;none&gt;              e3ed3ff4fc47        4 weeks ago         876MB
+&lt;none&gt;              &lt;none&gt;              3fb2c935ea65        4 weeks ago         876MB
+python              3.7                 11c6e5fd966a        7 weeks ago         876MB
+&lt;none&gt;              &lt;none&gt;              0eaaa9b08886        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              522c74354cae        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              6314dc265834        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              dae3071571fc        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              1d9a349338c6        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              cf103dcbc73f        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              87397162099a        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              5583bd2f0bda        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              f88e40331560        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              307b0a9e38a2        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              757672624a9a        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              94d42e84f5a5        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              aedff29ac6b7        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              76f8c5e18020        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              a7cda474cef4        2 months ago        882MB
 </pre></div>
 </div>
 </div>
@@ -430,46 +488,35 @@ docker run --name hw hello-world
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>docker: Error response from daemon: Conflict. The container name &quot;/hw&quot; is already in use by container &quot;3874ed91f0d2851201b8cb39e17dab26293baaf2467e63d0d208c6fd751b86d7&quot;. You have to remove (or rename) that container to be able to reuse that name.
-See &#39;docker run --help&#39;.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">CalledProcessError</span><span class="g g-Whitespace">                        </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">e97a4ba92617</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_cell_magic</span><span class="p">(</span><span class="s1">&#39;sh&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">docker run --name hw hello-world</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="nn">/opt/anaconda3/envs/beakerx/lib/python3.6/site-packages/IPython/core/interactiveshell.py</span> in <span class="ni">run_cell_magic</span><span class="nt">(self, magic_name, line, cell)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2369</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2370</span>                 <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_arg_s</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2371</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2372</span>             <span class="k">return</span> <span class="n">result</span>
-<span class="g g-Whitespace">   </span><span class="mi">2373</span> 
-
-<span class="nn">/opt/anaconda3/envs/beakerx/lib/python3.6/site-packages/IPython/core/magics/script.py</span> in <span class="ni">named_script_magic</span><span class="nt">(line, cell)</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>             <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">141</span>                 <span class="n">line</span> <span class="o">=</span> <span class="n">script</span>
-<span class="ne">--&gt; </span><span class="mi">142</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shebang</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">143</span> 
-<span class="g g-Whitespace">    </span><span class="mi">144</span>         <span class="c1"># write a basic docstring:</span>
-
-<span class="nn">&lt;decorator-gen-110&gt;</span> in <span class="ni">shebang</span><span class="nt">(self, line, cell)</span>
-
-<span class="nn">/opt/anaconda3/envs/beakerx/lib/python3.6/site-packages/IPython/core/magic.py</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
-<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">187</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span> 
-<span class="g g-Whitespace">    </span><span class="mi">189</span>         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-
-<span class="nn">/opt/anaconda3/envs/beakerx/lib/python3.6/site-packages/IPython/core/magics/script.py</span> in <span class="ni">shebang</span><span class="nt">(self, line, cell)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span>             <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span>         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">raise_error</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">245</span>             <span class="k">raise</span> <span class="n">CalledProcessError</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">err</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span> 
-<span class="g g-Whitespace">    </span><span class="mi">247</span>     <span class="k">def</span> <span class="nf">_run_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">to_close</span><span class="p">):</span>
-
-<span class="ne">CalledProcessError</span>: Command &#39;b&#39;\ndocker run --name hw hello-world\n&#39;&#39; returned non-zero exit status 125.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unable to find image &#39;hello-world:latest&#39; locally
+latest: Pulling from library/hello-world
+0e03bdcc26d7: Pulling fs layer
+0e03bdcc26d7: Download complete
+0e03bdcc26d7: Pull complete
+Digest: sha256:8c5aeeb6a5f3ba4883347d3747a7249f491766ca1caa47e5da5dfcf6b9b717c0
+Status: Downloaded newer image for hello-world:latest
 </pre></div>
 </div>
 </div>
@@ -484,6 +531,67 @@ docker images -a
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+labs-official_app   latest              8060f615c875        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              a148384864f0        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              ab291b33df44        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              85984a037ca5        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              81a58c3e2d26        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              283efbe07fcc        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              f1e72f4f6041        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              0f323e952ae4        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              691a3448dec1        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              661fdea2cb8d        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              5782a3f6c7c7        8 days ago          1.07GB
+&lt;none&gt;              &lt;none&gt;              a4a03014e415        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              13276be16588        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              9a8fd725a0ec        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              6fb6c53a366e        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              e511965cd244        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              2e6339a165f8        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              ceb8d38f2578        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              049f09b142b3        8 days ago          1.06GB
+&lt;none&gt;              &lt;none&gt;              48c48dc832de        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              0d0469358ef2        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              0a1027f52e06        8 days ago          973MB
+&lt;none&gt;              &lt;none&gt;              236e00eeec42        8 days ago          886MB
+&lt;none&gt;              &lt;none&gt;              851130cb9d81        8 days ago          886MB
+&lt;none&gt;              &lt;none&gt;              68f0b6107661        8 days ago          886MB
+postgres            10-alpine           72516014d1a3        13 days ago         71.9MB
+python              3                   5336a27a9b1f        2 weeks ago         886MB
+&lt;none&gt;              &lt;none&gt;              295fd57335da        2 weeks ago         1.05GB
+sms_web             latest              70fb78f1b546        2 weeks ago         1.05GB
+&lt;none&gt;              &lt;none&gt;              3dfce65454b4        2 weeks ago         1.05GB
+&lt;none&gt;              &lt;none&gt;              8ba98444c9c7        2 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              5ce2e1391351        2 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              baf7cfb5b88e        2 weeks ago         907MB
+&lt;none&gt;              &lt;none&gt;              49319f36d0e5        2 weeks ago         893MB
+&lt;none&gt;              &lt;none&gt;              8a8d793f33b0        2 weeks ago         876MB
+postgres            12                  492fb9ae4e7a        3 weeks ago         314MB
+&lt;none&gt;              &lt;none&gt;              916278c902b3        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              575e02fddfcf        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              3765a8d33066        4 weeks ago         990MB
+&lt;none&gt;              &lt;none&gt;              feade4d30c9f        4 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              9adabc544196        4 weeks ago         916MB
+&lt;none&gt;              &lt;none&gt;              2ebf9dd35811        4 weeks ago         907MB
+&lt;none&gt;              &lt;none&gt;              e0bb4083f1d5        4 weeks ago         893MB
+&lt;none&gt;              &lt;none&gt;              e3ed3ff4fc47        4 weeks ago         876MB
+&lt;none&gt;              &lt;none&gt;              3fb2c935ea65        4 weeks ago         876MB
+python              3.7                 11c6e5fd966a        7 weeks ago         876MB
+&lt;none&gt;              &lt;none&gt;              6314dc265834        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              0eaaa9b08886        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              522c74354cae        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              dae3071571fc        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              1d9a349338c6        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              87397162099a        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              cf103dcbc73f        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              5583bd2f0bda        2 months ago        1.02GB
+&lt;none&gt;              &lt;none&gt;              f88e40331560        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              307b0a9e38a2        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              757672624a9a        2 months ago        969MB
+&lt;none&gt;              &lt;none&gt;              94d42e84f5a5        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              aedff29ac6b7        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              76f8c5e18020        2 months ago        882MB
+&lt;none&gt;              &lt;none&gt;              a7cda474cef4        2 months ago        882MB
 hello-world         latest              bf756fb1ae65        10 months ago       13.3kB
 </pre></div>
 </div>
@@ -498,8 +606,14 @@ docker ps -a
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
-3874ed91f0d2        hello-world         &quot;/hello&quot;            14 minutes ago      Exited (0) 14 minutes ago                       hw
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                              PORTS                    NAMES
+7a23bbe90de5        hello-world          &quot;/hello&quot;                 1 second ago        Exited (0) Less than a second ago                            hw
+4d825eb0ebee        sms_web              &quot;sh -c &#39; ./db_script…&quot;   3 days ago          Exited (255) 2 days ago             0.0.0.0:5000-&gt;5000/tcp   sms_web_1
+f0422184a250        postgres:12          &quot;docker-entrypoint.s…&quot;   3 days ago          Exited (255) 2 days ago             0.0.0.0:5432-&gt;5432/tcp   sms_db_1
+7585117e9f44        labs-official_app    &quot;sh -c &#39;python manag…&quot;   8 days ago          Exited (0) 2 days ago                                        labs-official_app_1
+c96c488ef840        a4a03014e415         &quot;sh -c &#39;python manag…&quot;   8 days ago          Exited (0) 8 days ago                                        labs-official_app_run_656519563d13
+36e8e385562b        postgres:10-alpine   &quot;docker-entrypoint.s…&quot;   8 days ago          Exited (0) 8 days ago                                        labs-official_db_1
+55313f9b26a0        8ba98444c9c7         &quot;/bin/sh -c &#39;pip ins…&quot;   2 weeks ago         Exited (2) 2 weeks ago                                       angry_payne
 </pre></div>
 </div>
 </div>

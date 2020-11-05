@@ -125,11 +125,6 @@
    Writing Advanced SQL Queries
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_basic_performance_tuning_principles.html">
-   Basic Performance Tuning Principles
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -230,18 +225,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#setup-sql-alchemy">
-   Setup SQL Alchemy
+  <a class="reference internal nav-link" href="#setup-sql-workbench">
+   Setup SQL Workbench
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sql-alchemy-postgres">
-   SQL Alchemy + Postgres
+  <a class="reference internal nav-link" href="#sql-workbench-and-postgres">
+   SQL Workbench and Postgres
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sql-alchemy-features">
-   SQL Alchemy Features
+  <a class="reference internal nav-link" href="#sql-workbench-features">
+   SQL Workbench Features
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -253,6 +248,13 @@
   <a class="reference internal nav-link" href="#data-loading-utilities">
    Data Loading Utilities
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-copy-command">
+     Using COPY Command
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -271,9 +273,9 @@
 <ul class="simple">
 <li><p>Connecting to Database</p></li>
 <li><p>Using psql</p></li>
-<li><p>Setup SQL Alchemy</p></li>
-<li><p>SQL Alchemy + Postgres</p></li>
-<li><p>SQL Alchemy Features</p></li>
+<li><p>Setup SQL Workbench</p></li>
+<li><p>SQL Workbench and Postgres</p></li>
+<li><p>SQL Workbench Features</p></li>
 <li><p>Setup Postgres using Docker</p></li>
 <li><p>Data Loading Utilities</p></li>
 </ul>
@@ -288,6 +290,59 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">7600</span><span class="n">c8b786e3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">)</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/interactiveshell.py</span> in <span class="ni">run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2324</span>                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2325</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2326</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2327</span>             <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">   </span><span class="mi">2328</span> 
+
+<span class="nn">&lt;decorator-gen-57&gt;</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/magic.py</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
+<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">187</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span> 
+<span class="g g-Whitespace">    </span><span class="mi">189</span>         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/magics/extension.py</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">module_str</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>             <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="s1">&#39;Missing module name.&#39;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">33</span>         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">extension_manager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> 
+<span class="g g-Whitespace">     </span><span class="mi">35</span>         <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s1">&#39;already loaded&#39;</span><span class="p">:</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/extensions.py</span> in <span class="ni">load_extension</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span>             <span class="k">if</span> <span class="n">module_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span>                 <span class="k">with</span> <span class="n">prepended_to_syspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ipython_extension_dir</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">80</span>                     <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span>                     <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="vm">__file__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ipython_extension_dir</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>                         <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;Loading extensions from </span><span class="si">{dir}</span><span class="s2"> is deprecated. &quot;</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/__init__.py</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                 <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> 
+<span class="g g-Whitespace">    </span><span class="mi">129</span> 
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sql&#39;
 </pre></div>
 </div>
 </div>
@@ -490,20 +545,201 @@
 <li><p>For this course, we will be primarily using Jupyter based environment for practice.</p></li>
 </ul>
 </div>
-<div class="section" id="setup-sql-alchemy">
-<h2>Setup SQL Alchemy<a class="headerlink" href="#setup-sql-alchemy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup-sql-workbench">
+<h2>Setup SQL Workbench<a class="headerlink" href="#setup-sql-workbench" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to setup and use SQL Workbench.</p>
+<p><strong>Why SQL Workbench</strong></p>
+<p>Let us see the details why we might have to use SQL Workbench.</p>
+<ul class="simple">
+<li><p>Using Database CLIs such psql for postgres, mysql etc can be cumbersome for those who are not comfortable with command line interfaces.</p></li>
+<li><p>Database IDEs such as SQL Workbench will provide required features to run queries against databases with out worrying to much about underlying data dictionaries.</p></li>
+<li><p>SQL Workbench provide required features to review databases and objects with out writing queries or running database specific commands.</p></li>
+<li><p>Also Database IDEs provide capabilities to preserve the scripts we develop.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>In short Database IDEs such as SQL Workbench improves productivity.</strong></p>
+</div></blockquote>
+<p><strong>Alternative IDEs</strong></p>
+<p>There are several IDEs in the market.</p>
+<ul class="simple">
+<li><p>TOAD</p></li>
+<li><p>SQL Developer for Oracle</p></li>
+<li><p>MySQL Workbench
+and many others</p></li>
+</ul>
+<p><strong>Install Workbench</strong></p>
+<p>Here are the instructions to setup SQL Workbench.</p>
+<ul class="simple">
+<li><p>Download SQL Workbench (typically zip file)</p></li>
+<li><p>Unzip and launch</p></li>
+</ul>
+<p>Once installed we need to perform below steps which will be covered in detail as part of next topic.</p>
+<ul class="simple">
+<li><p>Download JDBC driver for the database we would like to connect.</p></li>
+<li><p>Get the database connectivity information and connect to the database.</p></li>
+</ul>
 </div>
-<div class="section" id="sql-alchemy-postgres">
-<h2>SQL Alchemy + Postgres<a class="headerlink" href="#sql-alchemy-postgres" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sql-workbench-and-postgres">
+<h2>SQL Workbench and Postgres<a class="headerlink" href="#sql-workbench-and-postgres" title="Permalink to this headline">¶</a></h2>
+<p>Let us connect to Postgres Database using SQL Workbench.</p>
+<ul class="simple">
+<li><p>We are trying to connect to Postgres Database that is running as part of Docker container running in a Ubuntu 18.04 VM provisioned from GCP.</p></li>
+<li><p>We have published Postgres database port to port 5433 on Ubuntu 18.04 VM.</p></li>
+<li><p>We typically use ODBC or JDBC to connect to a Database from remote machines (our PC).</p></li>
+<li><p>Here are the pre-requisites to connect to a Database on GCP.</p>
+<ul>
+<li><p>Make sure 5433 port is opened as part of the firewalls.</p></li>
+<li><p>If you have telnet configured on your system on which SQL Workbench is installed, make sure to validate by running telnet command using ip or DNS Alias and port number 5433.</p></li>
+<li><p>Ensure that you have downloaded right JDBC Driver for Postgres.</p></li>
+<li><p>Make sure to have right credentials (username and password).</p></li>
+<li><p>Ensure that you have database created on which the user have permissions.</p></li>
+</ul>
+</li>
+<li><p>You can validate credentials and permissions to the database by installing postgres client on Ubuntu 18.04 VM and then by connecting to the database using the credentials.</p></li>
+<li><p>Once you have all the information required along with JDBC jar, ensure to save the information as part of the profile. You can also validate before saving the details by using <strong>Test</strong> option.</p></li>
+</ul>
 </div>
-<div class="section" id="sql-alchemy-features">
-<h2>SQL Alchemy Features<a class="headerlink" href="#sql-alchemy-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sql-workbench-features">
+<h2>SQL Workbench Features<a class="headerlink" href="#sql-workbench-features" title="Permalink to this headline">¶</a></h2>
+<p>Here are some of the key features, you have to familiar with related to SQL Workbench.</p>
+<ul class="simple">
+<li><p>Saving profiles to connect to multiple databases.</p></li>
+<li><p>Develop SQL files and preserve them for future usage.</p></li>
+<li><p>Access data dictionary or information schema to validate tables, columns, sequences, indexes, constraints etc.</p></li>
+<li><p>Generate scripts out of existing data.</p></li>
+<li><p>Ability to manage database objects with out writing any commands. We can drop tables, indexes, sequences etc by right clicking and then dropping.</p></li>
+</ul>
+<p>Almost all leading IDEs provide all these features in similar fashion.</p>
+<p><strong>Usage Scenarios</strong></p>
+<p>Here are <strong>some of the usage scenarios</strong> for database IDEs such as SQL Workbench as part of day to day responsibilities.</p>
+<ul class="simple">
+<li><p>Developers for generating and validating data as part of unit testing.</p></li>
+<li><p>Testers to validate data for their test cases.</p></li>
+<li><p>Business Analysts and Data Analysts to run ad hoc queries to understand the data better.</p></li>
+<li><p>Developers to troubleshoot data related production issues using read only accounts.</p></li>
+</ul>
 </div>
 <div class="section" id="setup-postgres-using-docker">
 <h2>Setup Postgres using Docker<a class="headerlink" href="#setup-postgres-using-docker" title="Permalink to this headline">¶</a></h2>
+<p>In some cases you might want to have postgres setup on your machine. Let us understand how we can setup Postgres using Docker.</p>
+<ul class="simple">
+<li><p>If you are using Windows or Mac, ensure that you have installed Docker Desktop.</p></li>
+<li><p>If you are using Ubuntu based desktop, make sure to setup Docker.</p></li>
+<li><p>Here are the steps that can be used to setup Postgres database using Docker.</p>
+<ul>
+<li><p>Pull the postgres image using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span></code></p></li>
+<li><p>Create the container using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">create</span></code>.</p></li>
+<li><p>Start the container using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span></code>.</p></li>
+<li><p>Alternatively we can use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> which will pull, create and start the container.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span></code> or <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span> <span class="pre">-f</span></code> to review the logs to ensure Postgres Server is up and running.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">postgres</span>
+
+<span class="n">docker</span> <span class="n">container</span> <span class="n">create</span> \
+  <span class="o">--</span><span class="n">name</span> <span class="n">itv_pg</span> \
+  <span class="o">-</span><span class="n">p</span> <span class="mi">5433</span><span class="p">:</span><span class="mi">5432</span> \
+  <span class="o">-</span><span class="n">h</span> <span class="n">itv_pg</span> \
+  <span class="o">-</span><span class="n">e</span> <span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">itversity</span> \
+  <span class="n">postgres</span>
+
+<span class="n">docker</span> <span class="n">start</span> <span class="n">itv_pg</span>
+
+<span class="n">docker</span> <span class="n">logs</span> <span class="n">itv_pg</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="data-loading-utilities">
 <h2>Data Loading Utilities<a class="headerlink" href="#data-loading-utilities" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how we can load the data into databases using utilities provided.</p>
+<ul class="simple">
+<li><p>Most of the databases provide data loading utilities.</p></li>
+<li><p>One of the most common way of getting data into database tables is by using data loading utilities provided by the underlying datatabase technology.</p></li>
+<li><p>We can load delimited files into database using these utilities.</p></li>
+<li><p>Here are the steps we can follow to load the delimited data into the table.</p>
+<ul>
+<li><p>Make sure files are available on the server from which we are trying to load.</p></li>
+<li><p>Ensure the database and table are created for the data to be loaded.</p></li>
+<li><p>Run relevant command to load the data into the table.</p></li>
+<li><p>Make sure to validate by running queries.</p></li>
+</ul>
+</li>
+<li><p>Let us see a demo by loading a sample file into the table in Postgres database. The performance will be better if the files are loaded from the server directly.</p></li>
+</ul>
+<div class="section" id="using-copy-command">
+<h3>Using COPY Command<a class="headerlink" href="#using-copy-command" title="Permalink to this headline">¶</a></h3>
+<p>We can use COPY Command using <code class="docutils literal notranslate"><span class="pre">psql</span></code> to copy the data into the table.</p>
+<ul class="simple">
+<li><p>Make sure database is created along with the user with right permissions. Also the user who want to use <code class="docutils literal notranslate"><span class="pre">COPY</span></code> command need to have pg_read_server_files role assigned.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">itv_pg</span> <span class="n">psql</span> <span class="o">-</span><span class="n">U</span> <span class="n">postgres</span>
+
+<span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">itversity_sms_db</span><span class="p">;</span>
+<span class="n">CREATE</span> <span class="n">USER</span> <span class="n">itversity_sms_user</span> <span class="n">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;sms_password&#39;</span><span class="p">;</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">ON</span> <span class="n">DATABASE</span> <span class="n">itversity_sms_db</span> <span class="n">TO</span> <span class="n">itversity_sms_user</span><span class="p">;</span>
+<span class="n">GRANT</span> <span class="n">pg_read_server_files</span> <span class="n">TO</span> <span class="n">itversity_sms_user</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Exit and connect as non system user created.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">psql</span> <span class="o">-</span><span class="n">U</span> <span class="n">itversity_sms_user</span> \
+  <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> \
+  <span class="o">-</span><span class="n">p</span> <span class="mi">5433</span> \
+  <span class="o">-</span><span class="n">d</span> <span class="n">itversity_sms_db</span> \
+  <span class="o">-</span><span class="n">W</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create the <code class="docutils literal notranslate"><span class="pre">users</span></code> table.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">users</span> <span class="p">(</span>
+  <span class="n">user_id</span> <span class="n">SERIAL</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+  <span class="n">user_first_name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">user_last_name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">user_email_id</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">user_email_validated</span> <span class="n">BOOLEAN</span> <span class="n">DEFAULT</span> <span class="n">FALSE</span><span class="p">,</span>
+  <span class="n">user_password</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span>
+  <span class="n">user_role</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span> <span class="n">DEFAULT</span> <span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="o">--</span><span class="n">U</span> <span class="ow">and</span> <span class="n">A</span>
+  <span class="n">is_active</span> <span class="n">BOOLEAN</span> <span class="n">DEFAULT</span> <span class="n">FALSE</span><span class="p">,</span>
+  <span class="n">created_dt</span> <span class="n">DATE</span> <span class="n">DEFAULT</span> <span class="n">CURRENT_DATE</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create the file with sample data. In this case data is added to users.csv under <strong>~/sms_db</strong>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user_first_name</span><span class="p">,</span><span class="n">user_last_name</span><span class="p">,</span><span class="n">user_email_id</span><span class="p">,</span><span class="n">user_role</span><span class="p">,</span><span class="n">created_dt</span>
+<span class="n">Gordan</span><span class="p">,</span><span class="n">Bradock</span><span class="p">,</span><span class="n">gbradock0</span><span class="nd">@barnesandnoble</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">10</span>
+<span class="n">Tobe</span><span class="p">,</span><span class="n">Lyness</span><span class="p">,</span><span class="n">tlyness1</span><span class="nd">@paginegialle</span><span class="o">.</span><span class="n">it</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="mi">2020</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">10</span>
+<span class="n">Addie</span><span class="p">,</span><span class="n">Mesias</span><span class="p">,</span><span class="n">amesias2</span><span class="nd">@twitpic</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="mi">2020</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">05</span>
+<span class="n">Corene</span><span class="p">,</span><span class="n">Kohrsen</span><span class="p">,</span><span class="n">ckohrsen3</span><span class="nd">@buzzfeed</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="mi">2020</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">15</span>
+<span class="n">Darill</span><span class="p">,</span><span class="n">Halsall</span><span class="p">,</span><span class="n">dhalsall4</span><span class="nd">@intel</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="mi">2020</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">10</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Copy the files onto the server. In this case it is running in docker container.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">cp</span> <span class="n">users</span><span class="o">.</span><span class="n">csv</span> <span class="n">itv_pg</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use copy command to load the data</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COPY</span> <span class="n">users</span><span class="p">(</span><span class="n">user_first_name</span><span class="p">,</span> <span class="n">user_last_name</span><span class="p">,</span> <span class="n">user_email_id</span><span class="p">,</span> <span class="n">user_role</span><span class="p">,</span> <span class="n">created_dt</span><span class="p">)</span>
+<span class="n">FROM</span> <span class="s1">&#39;/tmp/users.csv&#39;</span>
+<span class="n">DELIMITER</span> <span class="s1">&#39;,&#39;</span>
+<span class="n">CSV</span> <span class="n">HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Validate by running queries</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">users</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

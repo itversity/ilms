@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Writing Advanced SQL Queries &#8212; My Jupyter Book</title>
+    <title>Query Performance Tuning &#8212; My Jupyter Book</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,7 +55,6 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Pre-Defined Functions" href="06_predefined_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -93,7 +92,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="01_getting_started.html">
    Getting Started
@@ -119,8 +118,8 @@
    Pre-Defined Functions
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_writing_advanced_sql_queries.html">
    Writing Advanced SQL Queries
   </a>
  </li>
@@ -166,7 +165,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/07_writing_advanced_sql_queries.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/08_query_performance_tuning.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -191,7 +190,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/07_writing_advanced_sql_queries.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/08_query_performance_tuning.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -214,48 +213,38 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#nested-sub-queries">
-   Nested Sub Queries
+  <a class="reference internal nav-link" href="#overview-of-cost-based-optimizer">
+   Overview of Cost Based Optimizer
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-with-clause">
-   Using WITH Clause
+  <a class="reference internal nav-link" href="#compute-statistics-for-cbo">
+   Compute Statistics for CBO
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pivoting-rows-into-columns">
-   Pivoting Rows into Columns
+  <a class="reference internal nav-link" href="#reading-and-interpreting-explain-plans">
+   Reading and Interpreting Explain Plans
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overview-of-analytic-functions">
-   Overview of Analytic Functions
+  <a class="reference internal nav-link" href="#criteria-for-creating-indexes">
+   Criteria for creating indexes
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#define-problem-statement-top-5-daily-products">
-   Define Problem Statement – Top 5 Daily Products
+  <a class="reference internal nav-link" href="#criteria-for-partitioning">
+   Criteria for Partitioning
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#analytic-functions-aggregations">
-   Analytic Functions – Aggregations
+  <a class="reference internal nav-link" href="#writing-queries-partition-pruning">
+   Writing Queries – Partition Pruning
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#analytic-functions-ranking">
-   Analytic Functions – Ranking
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#analytic-functions-windowing">
-   Analytic Functions – Windowing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#final-solution-top-5-daily-products">
-   Final Solution – Top 5 Daily Products
+  <a class="reference internal nav-link" href="#overview-of-query-hints">
+   Overview of Query Hints
   </a>
  </li>
 </ul>
@@ -269,46 +258,38 @@
         
               <div>
                 
-  <div class="section" id="writing-advanced-sql-queries">
-<h1>Writing Advanced SQL Queries<a class="headerlink" href="#writing-advanced-sql-queries" title="Permalink to this headline">¶</a></h1>
-<p>As part of this section we will understand how to write queries using some of the advanced features.</p>
+  <div class="section" id="query-performance-tuning">
+<h1>Query Performance Tuning<a class="headerlink" href="#query-performance-tuning" title="Permalink to this headline">¶</a></h1>
+<p>As part of this section we will go through basic performance tuning techniques with respect to queries.</p>
 <ul class="simple">
-<li><p>Nested Sub Queries</p></li>
-<li><p>Using WITH Clause</p></li>
-<li><p>Pivoting Rows into Columns</p></li>
-<li><p>Overview of Analytic Functions</p></li>
-<li><p>Define Problem Statement – Top 5 Daily Products</p></li>
-<li><p>Analytic Functions – Aggregations</p></li>
-<li><p>Analytic Functions – Ranking</p></li>
-<li><p>Analytic Functions – Windowing</p></li>
-<li><p>Final Solution – Top 5 Daily Products</p></li>
+<li><p>Overview of Cost Based Optimizer</p></li>
+<li><p>Compute Statistics for CBO</p></li>
+<li><p>Reading and Interpreting Explain Plans</p></li>
+<li><p>Criteria for creating indexes</p></li>
+<li><p>Criteria for Partitioning</p></li>
+<li><p>Writing Queries – Partition Pruning</p></li>
+<li><p>Overview of Query Hints</p></li>
 </ul>
-<div class="section" id="nested-sub-queries">
-<h2>Nested Sub Queries<a class="headerlink" href="#nested-sub-queries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview-of-cost-based-optimizer">
+<h2>Overview of Cost Based Optimizer<a class="headerlink" href="#overview-of-cost-based-optimizer" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="using-with-clause">
-<h2>Using WITH Clause<a class="headerlink" href="#using-with-clause" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compute-statistics-for-cbo">
+<h2>Compute Statistics for CBO<a class="headerlink" href="#compute-statistics-for-cbo" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pivoting-rows-into-columns">
-<h2>Pivoting Rows into Columns<a class="headerlink" href="#pivoting-rows-into-columns" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reading-and-interpreting-explain-plans">
+<h2>Reading and Interpreting Explain Plans<a class="headerlink" href="#reading-and-interpreting-explain-plans" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="overview-of-analytic-functions">
-<h2>Overview of Analytic Functions<a class="headerlink" href="#overview-of-analytic-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="criteria-for-creating-indexes">
+<h2>Criteria for creating indexes<a class="headerlink" href="#criteria-for-creating-indexes" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="define-problem-statement-top-5-daily-products">
-<h2>Define Problem Statement – Top 5 Daily Products<a class="headerlink" href="#define-problem-statement-top-5-daily-products" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="criteria-for-partitioning">
+<h2>Criteria for Partitioning<a class="headerlink" href="#criteria-for-partitioning" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="analytic-functions-aggregations">
-<h2>Analytic Functions – Aggregations<a class="headerlink" href="#analytic-functions-aggregations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="writing-queries-partition-pruning">
+<h2>Writing Queries – Partition Pruning<a class="headerlink" href="#writing-queries-partition-pruning" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="analytic-functions-ranking">
-<h2>Analytic Functions – Ranking<a class="headerlink" href="#analytic-functions-ranking" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="analytic-functions-windowing">
-<h2>Analytic Functions – Windowing<a class="headerlink" href="#analytic-functions-windowing" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="final-solution-top-5-daily-products">
-<h2>Final Solution – Top 5 Daily Products<a class="headerlink" href="#final-solution-top-5-daily-products" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview-of-query-hints">
+<h2>Overview of Query Hints<a class="headerlink" href="#overview-of-query-hints" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -340,7 +321,6 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="06_predefined_functions.html" title="previous page">Pre-Defined Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -125,11 +125,6 @@
    Writing Advanced SQL Queries
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_basic_performance_tuning_principles.html">
-   Basic Performance Tuning Principles
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -272,6 +267,38 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#solution-daily-product-revenue">
    Solution – Daily Product Revenue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises-basic-sql-queries">
+   Exercises - Basic SQL Queries
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1-customer-order-count">
+     Exercise 1 - Customer order count
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2-dormant-customers">
+     Exercise 2 - Dormant Customers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3-revenue-per-customer">
+     Exercise 3 - Revenue Per Customer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-4-revenue-per-category">
+     Exercise 4 - Revenue Per Category
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise-5-product-count-per-department">
+   Exercise 5 - Product Count Per Department
   </a>
  </li>
 </ul>
@@ -430,15 +457,63 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">7600</span><span class="n">c8b786e3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">)</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/interactiveshell.py</span> in <span class="ni">run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2324</span>                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2325</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2326</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2327</span>             <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">   </span><span class="mi">2328</span> 
+
+<span class="nn">&lt;decorator-gen-57&gt;</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/magic.py</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
+<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">187</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span> 
+<span class="g g-Whitespace">    </span><span class="mi">189</span>         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/magics/extension.py</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">module_str</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>             <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="s1">&#39;Missing module name.&#39;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">33</span>         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">extension_manager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> 
+<span class="g g-Whitespace">     </span><span class="mi">35</span>         <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s1">&#39;already loaded&#39;</span><span class="p">:</span>
+
+<span class="nn">~/Projects/Internal/bootcamp/ilms/ilms-env/lib/python3.7/site-packages/IPython/core/extensions.py</span> in <span class="ni">load_extension</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span>             <span class="k">if</span> <span class="n">module_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span>                 <span class="k">with</span> <span class="n">prepended_to_syspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ipython_extension_dir</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">80</span>                     <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span>                     <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="vm">__file__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ipython_extension_dir</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>                         <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;Loading extensions from </span><span class="si">{dir}</span><span class="s2"> is deprecated. &quot;</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/__init__.py</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                 <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> 
+<span class="g g-Whitespace">    </span><span class="mi">129</span> 
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
+
+<span class="nn">/usr/local/opt/python@3.7/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/_bootstrap.py</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sql&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>env: DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
 </pre></div>
 </div>
 </div>
@@ -449,22 +524,10 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>current_database</th>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT * FROM information_schema.tables 
 WHERE table_catalog = &#39;itversity_retail_db&#39; 
@@ -473,121 +536,6 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-6 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>table_catalog</th>
-        <th>table_schema</th>
-        <th>table_name</th>
-        <th>table_type</th>
-        <th>self_referencing_column_name</th>
-        <th>reference_generation</th>
-        <th>user_defined_type_catalog</th>
-        <th>user_defined_type_schema</th>
-        <th>user_defined_type_name</th>
-        <th>is_insertable_into</th>
-        <th>is_typed</th>
-        <th>commit_action</th>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>categories</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>customers</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>departments</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>order_items</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>orders</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>products</td>
-        <td>BASE TABLE</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>YES</td>
-        <td>NO</td>
-        <td>None</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -595,79 +543,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11599</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>256</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>12111</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>8827</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11318</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>7130</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>4530</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2911</td>
-        <td>PROCESSING</td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>5657</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>5648</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -675,101 +550,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_item_id</th>
-        <th>order_item_order_id</th>
-        <th>order_item_product_id</th>
-        <th>order_item_quantity</th>
-        <th>order_item_subtotal</th>
-        <th>order_item_product_price</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>957</td>
-        <td>1</td>
-        <td>299.98</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2</td>
-        <td>1073</td>
-        <td>1</td>
-        <td>199.99</td>
-        <td>199.99</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2</td>
-        <td>502</td>
-        <td>5</td>
-        <td>250.0</td>
-        <td>50.0</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2</td>
-        <td>403</td>
-        <td>1</td>
-        <td>129.99</td>
-        <td>129.99</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>4</td>
-        <td>897</td>
-        <td>2</td>
-        <td>49.98</td>
-        <td>24.99</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>4</td>
-        <td>365</td>
-        <td>5</td>
-        <td>299.95</td>
-        <td>59.99</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>4</td>
-        <td>502</td>
-        <td>3</td>
-        <td>150.0</td>
-        <td>50.0</td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>4</td>
-        <td>1014</td>
-        <td>4</td>
-        <td>199.92</td>
-        <td>49.98</td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>5</td>
-        <td>957</td>
-        <td>1</td>
-        <td>299.98</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>5</td>
-        <td>365</td>
-        <td>5</td>
-        <td>299.95</td>
-        <td>59.99</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -777,101 +557,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>product_id</th>
-        <th>product_category_id</th>
-        <th>product_name</th>
-        <th>product_description</th>
-        <th>product_price</th>
-        <th>product_image</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>Quest Q64 10 FT. x 10 FT. Slant Leg Instant U</td>
-        <td></td>
-        <td>59.98</td>
-        <td>http://images.acmesports.sports/Quest+Q64+10+FT.+x+10+FT.+Slant+Leg+Instant+Up+Canopy</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2</td>
-        <td>Under Armour Men&#x27;s Highlight MC Football Clea</td>
-        <td></td>
-        <td>129.99</td>
-        <td>http://images.acmesports.sports/Under+Armour+Men%27s+Highlight+MC+Football+Cleat</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2</td>
-        <td>Under Armour Men&#x27;s Renegade D Mid Football Cl</td>
-        <td></td>
-        <td>89.99</td>
-        <td>http://images.acmesports.sports/Under+Armour+Men%27s+Renegade+D+Mid+Football+Cleat</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2</td>
-        <td>Under Armour Men&#x27;s Renegade D Mid Football Cl</td>
-        <td></td>
-        <td>89.99</td>
-        <td>http://images.acmesports.sports/Under+Armour+Men%27s+Renegade+D+Mid+Football+Cleat</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2</td>
-        <td>Riddell Youth Revolution Speed Custom Footbal</td>
-        <td></td>
-        <td>199.99</td>
-        <td>http://images.acmesports.sports/Riddell+Youth+Revolution+Speed+Custom+Football+Helmet</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>2</td>
-        <td>Jordan Men&#x27;s VI Retro TD Football Cleat</td>
-        <td></td>
-        <td>134.99</td>
-        <td>http://images.acmesports.sports/Jordan+Men%27s+VI+Retro+TD+Football+Cleat</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2</td>
-        <td>Schutt Youth Recruit Hybrid Custom Football H</td>
-        <td></td>
-        <td>99.99</td>
-        <td>http://images.acmesports.sports/Schutt+Youth+Recruit+Hybrid+Custom+Football+Helmet+2014</td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>2</td>
-        <td>Nike Men&#x27;s Vapor Carbon Elite TD Football Cle</td>
-        <td></td>
-        <td>129.99</td>
-        <td>http://images.acmesports.sports/Nike+Men%27s+Vapor+Carbon+Elite+TD+Football+Cleat</td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>2</td>
-        <td>Nike Adult Vapor Jet 3.0 Receiver Gloves</td>
-        <td></td>
-        <td>50.0</td>
-        <td>http://images.acmesports.sports/Nike+Adult+Vapor+Jet+3.0+Receiver+Gloves</td>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>2</td>
-        <td>Under Armour Men&#x27;s Highlight MC Football Clea</td>
-        <td></td>
-        <td>129.99</td>
-        <td>http://images.acmesports.sports/Under+Armour+Men%27s+Highlight+MC+Football+Cleat</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -879,19 +564,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>68883</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -899,19 +571,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>172198</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -919,19 +578,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>1345</td>
-    </tr>
-</table></div></div>
 </div>
 </div>
 <div class="section" id="selecting-or-projecting-data">
@@ -949,21 +595,10 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The sql extension is already loaded. To reload it, use:
-  %reload_ext sql
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>env: DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
 </pre></div>
 </div>
 </div>
@@ -974,79 +609,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11599</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>256</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>12111</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>8827</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11318</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>7130</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>4530</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2911</td>
-        <td>PROCESSING</td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>5657</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>5648</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1054,243 +616,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-4 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>table_catalog</th>
-        <th>table_schema</th>
-        <th>table_name</th>
-        <th>column_name</th>
-        <th>ordinal_position</th>
-        <th>column_default</th>
-        <th>is_nullable</th>
-        <th>data_type</th>
-        <th>character_maximum_length</th>
-        <th>character_octet_length</th>
-        <th>numeric_precision</th>
-        <th>numeric_precision_radix</th>
-        <th>numeric_scale</th>
-        <th>datetime_precision</th>
-        <th>interval_type</th>
-        <th>interval_precision</th>
-        <th>character_set_catalog</th>
-        <th>character_set_schema</th>
-        <th>character_set_name</th>
-        <th>collation_catalog</th>
-        <th>collation_schema</th>
-        <th>collation_name</th>
-        <th>domain_catalog</th>
-        <th>domain_schema</th>
-        <th>domain_name</th>
-        <th>udt_catalog</th>
-        <th>udt_schema</th>
-        <th>udt_name</th>
-        <th>scope_catalog</th>
-        <th>scope_schema</th>
-        <th>scope_name</th>
-        <th>maximum_cardinality</th>
-        <th>dtd_identifier</th>
-        <th>is_self_referencing</th>
-        <th>is_identity</th>
-        <th>identity_generation</th>
-        <th>identity_start</th>
-        <th>identity_increment</th>
-        <th>identity_maximum</th>
-        <th>identity_minimum</th>
-        <th>identity_cycle</th>
-        <th>is_generated</th>
-        <th>generation_expression</th>
-        <th>is_updatable</th>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>orders</td>
-        <td>order_id</td>
-        <td>1</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>integer</td>
-        <td>None</td>
-        <td>None</td>
-        <td>32</td>
-        <td>2</td>
-        <td>0</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>itversity_retail_db</td>
-        <td>pg_catalog</td>
-        <td>int4</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>1</td>
-        <td>NO</td>
-        <td>NO</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>NEVER</td>
-        <td>None</td>
-        <td>YES</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>orders</td>
-        <td>order_date</td>
-        <td>2</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>timestamp without time zone</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>6</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>itversity_retail_db</td>
-        <td>pg_catalog</td>
-        <td>timestamp</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>2</td>
-        <td>NO</td>
-        <td>NO</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>NEVER</td>
-        <td>None</td>
-        <td>YES</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>orders</td>
-        <td>order_customer_id</td>
-        <td>3</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>integer</td>
-        <td>None</td>
-        <td>None</td>
-        <td>32</td>
-        <td>2</td>
-        <td>0</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>itversity_retail_db</td>
-        <td>pg_catalog</td>
-        <td>int4</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>3</td>
-        <td>NO</td>
-        <td>NO</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>NEVER</td>
-        <td>None</td>
-        <td>YES</td>
-    </tr>
-    <tr>
-        <td>itversity_retail_db</td>
-        <td>public</td>
-        <td>orders</td>
-        <td>order_status</td>
-        <td>4</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>character varying</td>
-        <td>45</td>
-        <td>180</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>itversity_retail_db</td>
-        <td>pg_catalog</td>
-        <td>varchar</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>4</td>
-        <td>NO</td>
-        <td>NO</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>NO</td>
-        <td>NEVER</td>
-        <td>None</td>
-        <td>YES</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1298,68 +623,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_customer_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>11599</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>256</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>12111</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>8827</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>11318</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7130</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4530</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>2911</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PROCESSING</td>
-    </tr>
-    <tr>
-        <td>5657</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>5648</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1367,68 +630,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_customer_id</th>
-        <th>to_char</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>11599</td>
-        <td>2013-07</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>256</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>12111</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>8827</td>
-        <td>2013-07</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>11318</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7130</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4530</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>2911</td>
-        <td>2013-07</td>
-        <td>PROCESSING</td>
-    </tr>
-    <tr>
-        <td>5657</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>5648</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1436,68 +637,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_customer_id</th>
-        <th>order_month</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>11599</td>
-        <td>2013-07</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>256</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>12111</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>8827</td>
-        <td>2013-07</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>11318</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7130</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4530</td>
-        <td>2013-07</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>2911</td>
-        <td>2013-07</td>
-        <td>PROCESSING</td>
-    </tr>
-    <tr>
-        <td>5657</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-    <tr>
-        <td>5648</td>
-        <td>2013-07</td>
-        <td>PENDING_PAYMENT</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1505,57 +644,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_month</th>
-    </tr>
-    <tr>
-        <td>2014-01</td>
-    </tr>
-    <tr>
-        <td>2014-05</td>
-    </tr>
-    <tr>
-        <td>2013-12</td>
-    </tr>
-    <tr>
-        <td>2013-11</td>
-    </tr>
-    <tr>
-        <td>2014-04</td>
-    </tr>
-    <tr>
-        <td>2014-07</td>
-    </tr>
-    <tr>
-        <td>2014-03</td>
-    </tr>
-    <tr>
-        <td>2013-08</td>
-    </tr>
-    <tr>
-        <td>2013-10</td>
-    </tr>
-    <tr>
-        <td>2013-07</td>
-    </tr>
-    <tr>
-        <td>2014-02</td>
-    </tr>
-    <tr>
-        <td>2013-09</td>
-    </tr>
-    <tr>
-        <td>2014-06</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1563,21 +651,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>68883</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1585,21 +658,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>distinct_month_count</th>
-    </tr>
-    <tr>
-        <td>13</td>
-    </tr>
-</table></div></div>
 </div>
 </div>
 <div class="section" id="filtering-data">
@@ -1619,83 +677,24 @@ Returning data to local variable result_set
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT * FROM orders WHERE order_status = &#39;COMPLETE&#39; LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>12111</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11318</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>7130</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>4530</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>15</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2568</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>17</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2667</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>22</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>333</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>26</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>7562</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>28</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>656</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>32</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>3960</td>
-        <td>COMPLETE</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1703,19 +702,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>68883</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1723,19 +709,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>22899</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1743,79 +716,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11599</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>12111</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>8827</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>11318</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>7130</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>4530</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>12</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>1837</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>15</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2568</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>17</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>2667</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>18</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>1205</td>
-        <td>CLOSED</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1823,21 +723,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>30455</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1845,23 +730,10 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>30455</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT * FROM orders 
 WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
@@ -1870,93 +742,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>4598</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25888</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>6735</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25889</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>10045</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25891</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3037</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25895</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>1044</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25897</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>6405</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25898</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3950</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25899</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>8068</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25900</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>2382</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25901</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3099</td>
-        <td>COMPLETE</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT * FROM orders 
 WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
@@ -1965,95 +754,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_customer_id</th>
-        <th>order_status</th>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>4598</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25888</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>6735</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25889</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>10045</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25891</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3037</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25895</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>1044</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25897</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>6405</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25898</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3950</td>
-        <td>COMPLETE</td>
-    </tr>
-    <tr>
-        <td>25899</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>8068</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25900</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>2382</td>
-        <td>CLOSED</td>
-    </tr>
-    <tr>
-        <td>25901</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>3099</td>
-        <td>COMPLETE</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1) FROM orders 
 WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
@@ -2061,35 +765,10 @@ WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>2544</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1) FROM orders 
 WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
@@ -2097,31 +776,6 @@ WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>2544</td>
-    </tr>
-</table></div></div>
 </div>
 </div>
 <div class="section" id="joining-tables-inner">
@@ -2173,7 +827,21 @@ Returning data to local variable result_set
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2185,89 +853,6 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>199.99</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>250.0</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>129.99</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>49.98</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>299.95</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>150.0</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>199.92</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.95</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2275,19 +860,6 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>68883</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2295,25 +867,10 @@ Returning data to local variable result_set
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-</pre></div>
-</div>
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>172198</td>
-    </tr>
-</table></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o JOIN order_items oi
@@ -2321,35 +878,10 @@ FROM orders o JOIN order_items oi
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>172198</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2362,93 +894,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>49.98</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>299.95</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>150.0</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>199.92</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.95</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>99.96</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>129.99</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o JOIN order_items oi
@@ -2458,35 +907,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>75408</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2500,95 +924,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.97</td>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>100.0</td>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>79.98</td>
-    </tr>
-    <tr>
-        <td>25882</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>399.98</td>
-    </tr>
-    <tr>
-        <td>25888</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>25889</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>99.96</td>
-    </tr>
-    <tr>
-        <td>25889</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>19.99</td>
-    </tr>
-    <tr>
-        <td>25891</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>CLOSED</td>
-        <td>150.0</td>
-    </tr>
-    <tr>
-        <td>25891</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>CLOSED</td>
-        <td>50.0</td>
-    </tr>
-    <tr>
-        <td>25891</td>
-        <td>2014-01-01 00:00:00</td>
-        <td>CLOSED</td>
-        <td>119.97</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o JOIN order_items oi
@@ -2599,31 +938,6 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>6198</td>
-    </tr>
-</table></div></div>
 </div>
 </div>
 <div class="section" id="joining-tables-outer">
@@ -2648,7 +962,21 @@ Returning data to local variable result_set
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2661,104 +989,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_order_id</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>199.99</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>250.0</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>129.99</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>49.98</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>299.95</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>150.0</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>199.92</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>7</td>
-        <td>199.99</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>7</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>7</td>
-        <td>79.95</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o LEFT OUTER JOIN order_items oi
@@ -2766,35 +1000,10 @@ FROM orders o LEFT OUTER JOIN order_items oi
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>183650</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2808,106 +1017,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_order_id</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>47</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>55</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>79</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>82</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>108</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>PROCESSING</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>109</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>126</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>176</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>199</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>ON_HOLD</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-    <tr>
-        <td>218</td>
-        <td>2013-07-26 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>None</td>
-        <td>None</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o LEFT OUTER JOIN order_items oi
@@ -2916,35 +1029,10 @@ WHERE oi.order_item_order_id IS NULL
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>11452</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o LEFT OUTER JOIN order_items oi
@@ -2954,35 +1042,10 @@ WHERE oi.order_item_order_id IS NULL
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>5189</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -2995,106 +1058,10 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_order_id</th>
-        <th>order_item_subtotal</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>1</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>199.99</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>250.0</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>PENDING_PAYMENT</td>
-        <td>2</td>
-        <td>129.99</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>49.98</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>299.95</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>150.0</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>CLOSED</td>
-        <td>4</td>
-        <td>199.92</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>5</td>
-        <td>299.98</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>2013-07-25 00:00:00</td>
-        <td>COMPLETE</td>
-        <td>5</td>
-        <td>299.95</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT count(1)
 FROM orders o RIGHT OUTER JOIN order_items oi
@@ -3102,33 +1069,10 @@ FROM orders o RIGHT OUTER JOIN order_items oi
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-1 rows affected.
-Returning data to local variable result_set
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>count</th>
-    </tr>
-    <tr>
-        <td>172198</td>
-    </tr>
-</table></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span> result_set &lt;&lt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
 
 SELECT o.order_id,
     o.order_date,
@@ -3142,42 +1086,386 @@ LIMIT 10
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * postgresql://itversity_retail_user:***@localhost:5433/itversity_retail_db
-</pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 rows affected.
-Returning data to local variable result_set
+</div>
+<div class="section" id="performing-aggregations">
+<h2>Performing Aggregations<a class="headerlink" href="#performing-aggregations" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to aggregate the data.</p>
+<ul class="simple">
+<li><p>We can perform global aggregations as well as aggregations by key.</p></li>
+<li><p>Global Aggregations</p>
+<ul>
+<li><p>Get total number of orders.</p></li>
+<li><p>Get revenue for a given order id.</p></li>
+<li><p>Get number of records with order_status either COMPLETED or CLOSED.</p></li>
+</ul>
+</li>
+<li><p>Aggregations by key - using <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code></p>
+<ul>
+<li><p>Get number of orders by date or status.</p></li>
+<li><p>Get revenue for each order_id.</p></li>
+<li><p>Get daily product revenue (using order date and product id as keys).</p></li>
+</ul>
+</li>
+<li><p>We can also use <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause to apply filtering on top of aggregated data.</p>
+<ul>
+<li><p>Get daily product revenue where revenue is greater than $500 (using order date and product id as keys).</p></li>
+</ul>
+</li>
+<li><p>Rules while using <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code>.</p>
+<ul>
+<li><p>We can have the columns which are specified as part of <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> in <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> clause.</p></li>
+<li><p>On top of those, we can have derived columns using aggregate functions.</p></li>
+<li><p>We cannot have any other columns that are not used as part of <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> on derived column using non aggregate functions.</p></li>
+<li><p>We will not be able to use aggregate functions or aliases used in the select clause as part of the where clause.</p></li>
+<li><p>If we want to filter based on aggregated results, then we can leverage <code class="docutils literal notranslate"><span class="pre">HAVING</span></code> on top of <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> (specifying <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> is not an option)</p></li>
+</ul>
+</li>
+<li><p>Typical query execution - FROM -&gt; WHERE -&gt; GROUP BY -&gt; SELECT</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">result_set</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-    <tr>
-        <th>order_id</th>
-        <th>order_date</th>
-        <th>order_status</th>
-        <th>order_item_order_id</th>
-        <th>order_item_subtotal</th>
-    </tr>
-</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT count(order_id) FROM orders
+</pre></div>
 </div>
 </div>
-<div class="section" id="performing-aggregations">
-<h2>Performing Aggregations<a class="headerlink" href="#performing-aggregations" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT count(DISTINCT order_date) FROM orders
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT round(sum(order_item_subtotal::numeric), 2) AS order_revenue
+FROM order_items 
+WHERE order_item_order_id = 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT count(1) 
+FROM orders
+WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT order_date,
+    count(1)
+FROM orders
+GROUP BY order_date
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT order_status,
+    count(1) AS status_count
+FROM orders
+GROUP BY order_status
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT order_item_order_id,
+    round(sum(order_item_subtotal), 2) AS order_revenue
+FROM order_items
+GROUP BY order_item_order_id 
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+GROUP BY o.order_date,
+    oi.order_item_product_id
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+    AND revenue &gt;= 500
+GROUP BY o.order_date,
+    oi.order_item_product_id
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+GROUP BY o.order_date,
+    oi.order_item_product_id
+HAVING round(sum(oi.order_item_subtotal::numeric), 2) &gt;= 500
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="sorting-data">
 <h2>Sorting Data<a class="headerlink" href="#sorting-data" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to sort the data using <strong>SQL</strong>.</p>
+<ul class="simple">
+<li><p>We typically perform sorting as final step.</p></li>
+<li><p>Sorting can be done either by using one field or multiple fields.</p></li>
+<li><p>We can sort the data either in ascending order or descending order by using column or expression.</p></li>
+<li><p>By default, the sorting order is ascendig and we can change it to descending by using <code class="docutils literal notranslate"><span class="pre">DESC</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT * FROM orders
+ORDER BY order_customer_id
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT * FROM orders
+ORDER BY order_customer_id,
+    order_date
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT * FROM orders
+ORDER BY order_customer_id,
+    order_date DESC
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+GROUP BY o.order_date,
+    oi.order_item_product_id
+ORDER BY o.order_date,
+    revenue DESC
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="solution-daily-product-revenue">
 <h2>Solution – Daily Product Revenue<a class="headerlink" href="#solution-daily-product-revenue" title="Permalink to this headline">¶</a></h2>
+<p>Let us review the Final Solution for our problem statement <strong>daily_product_revenue</strong>.</p>
+<ul class="simple">
+<li><p>Prepare tables</p>
+<ul>
+<li><p>Create tables</p></li>
+<li><p>Load the data into tables</p></li>
+</ul>
+</li>
+<li><p>We need to project the fields which we are interested in.</p>
+<ul>
+<li><p>order_date</p></li>
+<li><p>order_item_product_id</p></li>
+<li><p>product_revenue</p></li>
+</ul>
+</li>
+<li><p>As we have fields from multiple tables, we need to perform join after which we have to filter for COMPLETE or CLOSED orders.</p></li>
+<li><p>We have to group the data by order_date and order_item_product_id, then we have to perform aggregation on order_item_subtotal to get product_revenue.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">env</span> DATABASE_URL=postgresql://itversity_retail_user:retail_password@localhost:5433/itversity_retail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS product_revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+GROUP BY o.order_date,
+    oi.order_item_product_id
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+
+SELECT o.order_date,
+    oi.order_item_product_id,
+    round(sum(oi.order_item_subtotal::numeric), 2) AS product_revenue
+FROM orders o JOIN order_items oi
+    ON o.order_id = oi.order_item_order_id
+WHERE o.order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+GROUP BY o.order_date,
+    oi.order_item_product_id
+ORDER BY o.order_date,
+    product_revenue DESC
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercises-basic-sql-queries">
+<h2>Exercises - Basic SQL Queries<a class="headerlink" href="#exercises-basic-sql-queries" title="Permalink to this headline">¶</a></h2>
+<p>Here are some of the exercises for which you can write SQL queries to self evaluate.</p>
+<div class="section" id="exercise-1-customer-order-count">
+<h3>Exercise 1 - Customer order count<a class="headerlink" href="#exercise-1-customer-order-count" title="Permalink to this headline">¶</a></h3>
+<p>Get order count per customer for the month of 2014 January.</p>
+<ul class="simple">
+<li><p>Tables - orders and customers</p></li>
+<li><p>Data should be sorted in descending order by count and ascending order by customer id.</p></li>
+<li><p>Output should contain customer_id, customer_first_name, customer_last_name and customer_order_count.</p></li>
+</ul>
+</div>
+<div class="section" id="exercise-2-dormant-customers">
+<h3>Exercise 2 - Dormant Customers<a class="headerlink" href="#exercise-2-dormant-customers" title="Permalink to this headline">¶</a></h3>
+<p>Get the customer details who have not placed any order for the month of 2014 January.</p>
+<ul class="simple">
+<li><p>Tables - orders and customers</p></li>
+<li><p>Data should be sorted in ascending order by customer_id</p></li>
+<li><p>Output should contain all the fields from customers</p></li>
+</ul>
+</div>
+<div class="section" id="exercise-3-revenue-per-customer">
+<h3>Exercise 3 - Revenue Per Customer<a class="headerlink" href="#exercise-3-revenue-per-customer" title="Permalink to this headline">¶</a></h3>
+<p>Get the revenue generated by each customer for the month of 2014 January</p>
+<ul class="simple">
+<li><p>Tables - orders, order_items and customers</p></li>
+<li><p>Data should be sorted in descending order by revenue and then ascending order by customer_id</p></li>
+<li><p>Output should contain customer_id, customer_first_name, customer_last_name, customer_revenue.</p></li>
+<li><p>If there are no orders placed by customer, then the corresponding revenue for a give customer should be 0.</p></li>
+<li><p>Consider only COMPLETE and CLOSED orders</p></li>
+</ul>
+</div>
+<div class="section" id="exercise-4-revenue-per-category">
+<h3>Exercise 4 - Revenue Per Category<a class="headerlink" href="#exercise-4-revenue-per-category" title="Permalink to this headline">¶</a></h3>
+<p>Get the revenue generated for each customer for the month of 2014 January</p>
+<ul class="simple">
+<li><p>Tables - orders, order_items, products and categories</p></li>
+<li><p>Data should be sorted in ascending order by category_id.</p></li>
+<li><p>Output should contain all the fields from category along with the revenue as category_revenue.</p></li>
+<li><p>Consider only COMPLETE and CLOSED orders</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="exercise-5-product-count-per-department">
+<h2>Exercise 5 - Product Count Per Department<a class="headerlink" href="#exercise-5-product-count-per-department" title="Permalink to this headline">¶</a></h2>
+<p>Get the products for each department.</p>
+<ul class="simple">
+<li><p>Tables - departments, categories, products</p></li>
+<li><p>Data should be sorted in ascending order by department_id</p></li>
+<li><p>Output should contain all the fields from department and the product count as product_count</p></li>
+</ul>
 </div>
 </div>
 
